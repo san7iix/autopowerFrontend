@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Lato;
+}
+
+.container_general {
+  width: 80vw;
+  margin: auto;
+}
+
+.container {
+  display: flex;
+  padding: 30px;
+  flex-wrap: wrap;
+  align-content: center;
+  background: #f7f7f7;
+}
+
+.container div {
+  margin: auto;
+}
+
+.img_home {
+  width: 100%px;
+}
+
+.container50 {
+  width: 50%;
+}
+
+header,
+footer {
+  font-family: Lato;
+  color: #47525E;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  border-bottom: 0.1px #E5E9F2 solid;
+}
+
+footer {
+  color: #F7F7F7;
+}
+
+header a,
+header a:visited,
+.div_login a {
+  text-decoration: none;
+  color: #47525E;
+}
+
+footer a,
+footer a:visited {
+  text-decoration: none;
+  color: #F7F7F7;
+}
+
+.card_menu a {
+  text-decoration: none;
+  color: #47525E;
+}
+
+header a:hover {
+  color: #2a323b;
+}
+
+.active {
+  background: #E5E9F2;
+}
+
+.logo {
+  cursor: pointer;
+  width: 64px;
+  height: 64px;
+}
+
+.logo_div {
+  display: flex;
+}
+
+.logo_div h1 {
+  margin: auto;
+}
+
+.nav__links {
+  list-style: none;
+}
+
+.nav__links li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.nav__links a {
+  transition: all 0.3s ease 0;
+}
+
+footer {
+  background-color: #47525E;
+  height: 224px;
+}
+
+.card {
+  width: 300px;
+  margin: auto 20px;
+}
+
+.card_img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.div_login {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="email"] {
+  height: 50px;
+  margin: 15px auto;
+  border-radius: 5px;
+  outline: none;
+  border: 1px #8492A6 solid;
+  padding: 10px;
+  max-width: 300px;
+  width: 300px;
+}
+
+.button_primary {
+  padding: 15px;
+  background: #464C54;
+  border-radius: 5px;
+  outline: none;
+  color: white;
+  margin: 10px auto;
+  border: 1px;
+}
+
+.button_secondary {
+  padding: 15px;
+  border-radius: 5px;
+  outline: none;
+  color: #47525E;
+  margin: 10px auto;
+  border: 1px solid #47525E;
+}
+
+
+
+.text_secondary {
+  color: #8190A5;
+}
+
+.div_login h1,
+.div_login p,
+.div_login a {
+  margin: auto;
+  margin: 10px auto;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.card_menu img {
+  width: 200px;
+  object-fit: cover;
+  height: 200px;
+}
+
+.msg_error {
+  text-align: center;
+  color: red;
+}
+
+table {
+  margin: auto;
+  text-align: center;
+}
+
+tbody tr td,
+thead th {
+  padding: 10px;
+  width: 200px;
+}
