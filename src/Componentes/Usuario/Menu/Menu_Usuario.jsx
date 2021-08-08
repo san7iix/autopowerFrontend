@@ -29,7 +29,7 @@ let opciones = [
     url: 'estado_vehiculo',
   },
   {
-    titulo: 'Etrega de vehiculo',
+    titulo: 'Entrega de vehiculo',
     imagen: 'servicio1.jpeg',
     url: 'entrega_vehiculo',
   },
