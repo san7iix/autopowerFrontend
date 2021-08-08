@@ -1,17 +1,37 @@
-import React from 'react'
-import ReactDom from 'react-dom'
+import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
-
 export function BarraSup() {
+  let history = useHistory()
 
-  let history = useHistory();
+  const [usuario, setUsuario] = useState(localStorage.getItem('user_autoPower'))
 
   function logout() {
     localStorage.removeItem('user_autoPower');
     localStorage.removeItem('user_autoPower_id');
     history.push('/');
+    window.location.reload();
   }
+
+  let login_btn = (
+    <li>
+      <Link to="/loginUsuario">
+        <b>Login</b>
+      </Link>
+    </li>
+  )
+
+  let logOut_btn = (
+    <li>
+      <Link onClick={logout}>
+        <b>Logout</b>
+      </Link>
+    </li>
+  )
+
+  useEffect(() => {
+    
+  }, [usuario])
 
   return (
     <header>
@@ -25,7 +45,7 @@ export function BarraSup() {
             <Link to="/">Inicio</Link>
           </li>
           <li className="">
-            <Link to="/inicio_usuario">Inicio Usuario</Link>
+            <Link to="/inicio_usuario">Menú usuario</Link>
           </li>
           <li>
             <Link to="/servicios">Servicios</Link>
@@ -33,18 +53,10 @@ export function BarraSup() {
           <li>
             <Link to="/como_funciona">¿Cómo funciona?</Link>
           </li>
+          {usuario ? logOut_btn : ''}
+          {!usuario ? login_btn : ''}
           <li>
             <Link to="/redes">Redes</Link>
-          </li>
-          <li>
-            <Link to="/loginUsuario">
-              <b>Login</b>
-            </Link>
-          </li>
-          <li>
-            <Link onClick={logout}>
-              <b>Logout</b>
-            </Link>
           </li>
         </ul>
       </nav>

@@ -1,19 +1,17 @@
 import React, { useState } from 'react'
 import API_USUARIO from '../../../API_METHODS/Usuario/API_USUARIO'
-import {useHistory } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom'
 
 export function AgregarVehiculo() {
-  const [idUsuario, setidUsuario] = useState(
-    localStorage.getItem('user_autoPower_id')
-  )
   const [nombre, setNombre] = useState('')
   const [marca, setMarca] = useState('')
   const [modelo, setModelo] = useState('')
   const [color, setColor] = useState('')
+  const [placa, setPlaca] = useState('')
+  const [cedulaPropietario, setcedulaPropietario] = useState('')
+  const [nombrePropietario, setnombrePropietario] = useState('')
 
-  let history = useHistory();
-
+  let history = useHistory()
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -31,25 +29,65 @@ export function AgregarVehiculo() {
       case 'color':
         setColor(value)
         break
+      case 'placa':
+        setPlaca(value)
+        break
+      case 'cedula_propietario':
+        setcedulaPropietario(value)
+        break
+      case 'nombre_propietario':
+        setnombrePropietario(value)
+        break
       default:
         break
     }
   }
 
   function agregarVehiculo() {
-    API_USUARIO.agregarVehiculo(idUsuario, nombre, marca, modelo, color)
-      .then((respuesta) => {
-        return respuesta
+    if (
+      nombre === '' ||
+      nombrePropietario === '' ||
+      cedulaPropietario === '' ||
+      placa === '' ||
+      color === '' ||
+      marca === '' ||
+      modelo === ''
+    ) {
+      alert('Debe llenar todos los campos')
+      return
+    }
+
+    API_USUARIO.verificarPLaca(placa)
+      .then((res) => {
+        return res
       })
       .then((data) => {
-        if(data.status){
-          alert(data.message);
-          history.push('/inicio_usuario')
-        }else{
-          alert(data.message);
+        if (data.status) {
+          API_USUARIO.agregarVehiculo(
+            nombrePropietario,
+            cedulaPropietario,
+            nombre,
+            marca,
+            modelo,
+            color,
+            placa,
+          )
+            .then((respuesta) => {
+              return respuesta
+            })
+            .then((data) => {
+              if (data.status) {
+                alert(data.message)
+                history.push('/inicio_usuario')
+              } else {
+                alert(data.message)
+              }
+            })
+            .catch((err) => console.error(err))
+        } else {
+          alert(data.message)
         }
       })
-      .catch((err) => console.error(err))
   }
 
   return (
@@ -87,6 +125,30 @@ export function AgregarVehiculo() {
           placeholder="Color"
           onChange={handleChange}
           value={color}
+        ></input>
+        <input
+          type="text"
+          name="placa"
+          id="placa"
+          placeholder="Placa"
+          onChange={handleChange}
+          value={placa}
+        ></input>
+        <input
+          type="text"
+          name="nombre_propietario"
+          id="nombre_propietario"
+          placeholder="Nombre del propietario"
+          onChange={handleChange}
+          value={nombrePropietario}
+        ></input>
+        <input
+          type="text"
+          name="cedula_propietario"
+          id="cedula_propietario"
+          placeholder="Cédula del propietario"
+          onChange={handleChange}
+          value={cedulaPropietario}
         ></input>
         <button id="login" className="button_primary" onClick={agregarVehiculo}>
           Agregar vehiculo

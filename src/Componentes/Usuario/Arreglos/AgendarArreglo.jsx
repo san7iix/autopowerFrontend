@@ -18,21 +18,24 @@ let lista_tipo_arreglo = [
 ]
 
 export function AgendarArreglo() {
-  const [talleres, setTalleres] = useState([])
-  const [autos, setAutos] = useState([])
-  const [usuario] = useState(localStorage.getItem('user_autoPower_id'))
+  const [talleres, setTalleres] = useState([]);
+  const [autos, setAutos] = useState([]);
+  const [usuario] = useState(localStorage.getItem('user_autoPower_id'));
+  const [mecanicos, setMecanicos] = useState([]);
 
-  const [auto, setAuto] = useState('')
-  const [taller, setTaller] = useState('')
-  const [tipoArreglo, settipoArreglo] = useState('')
-  const [fecha, setFecha] = useState('')
+  const [auto, setAuto] = useState('');
+  const [taller, setTaller] = useState('');
+  const [tipoArreglo, settipoArreglo] = useState('');
+  const [fecha, setFecha] = useState('');
+  const [mecanico, setMecanico] = useState('');
 
   let history = useHistory()
 
   useEffect(() => {
     obtenerTalleres()
     obtenerAutos(usuario)
-  }, [usuario])
+    if(fecha!=='') obtenerMecanicos();
+  }, [fecha])
 
   function obtenerTalleres() {
     API_USUARIO.obtenerTalleres()
@@ -48,8 +51,20 @@ export function AgendarArreglo() {
       })
   }
 
-  function obtenerAutos(usuario) {
-    API_USUARIO.obtenerAutos(usuario)
+  function obtenerMecanicos() {
+    API_USUARIO.obtenerMecanicoLibre(fecha).then(respuesta=>{
+      return respuesta;
+    }).then(data=>{
+      if(data.status){
+        setMecanicos(data.data);
+      }else{
+        alert(data.message);
+      }
+    }).catch(err=>console.error(err));
+  }
+
+  function obtenerAutos() {
+    API_USUARIO.obtenerAutosArreglar()
       .then((respuesta) => {
         return respuesta
       })
@@ -76,6 +91,9 @@ export function AgendarArreglo() {
       case 'taller_agendar':
         setTaller(value)
         break
+      case 'mecanico_agendar':
+        setMecanico(value)
+        break
       default:
         break
     }
@@ -87,12 +105,12 @@ export function AgendarArreglo() {
   }
 
   function agendar() {
-    if (auto === '' || taller === '' || tipoArreglo === '' || fecha === '') {
+    if (auto === '' || taller === '' || tipoArreglo === '' || fecha === '' || mecanico === '') {
       alert('Debe llenar todos los campos para continuar la operación')
-      return
+      return;
     }
 
-    API_USUARIO.agendarArreglo(auto, fecha, tipoArreglo, taller)
+    API_USUARIO.agendarArreglo(auto, fecha, tipoArreglo, taller, mecanico)
       .then((respuesta) => {
         return respuesta
       })
@@ -139,6 +157,17 @@ export function AgendarArreglo() {
       </select>
 
       <input type="date" id="fecha" name="fecha" onChange={handleFecha}></input>
+
+      <select id="mecanico_agendar" onChange={handleChange}>
+        <option disabled selected>
+          Seleccione un mecánico
+        </option>
+        {mecanicos.map((mec) => (
+          <option key={mec.cedula} value={mec.cedula}>
+            {`${mec.cedula} - ${mec.nombre}`}
+          </option>
+        ))}
+      </select>
 
       <button className="button_primary" onClick={agendar}>
         Agendar

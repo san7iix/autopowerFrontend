@@ -21,10 +21,6 @@ export function EstadoVehiculo() {
       estado: false,
     },
     {
-      titulo: 'Recepción del vehículo',
-      estado: false,
-    },
-    {
       titulo: 'Revisión en progreso',
       estado: false,
     },
@@ -40,7 +36,7 @@ export function EstadoVehiculo() {
 
   useEffect(() => {
     obtenerAutos(usuario)
-    if (auto != '') {
+    if (auto !== '') {
       obtenerEstadoVehiculo(auto)
       modificarEstado()
     }

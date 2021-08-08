@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import { BarraSup } from './Componentes/General/Navbar/BarraSup'
 import { BarraInf } from './Componentes/General/Footer/BarraInf'
@@ -14,8 +14,16 @@ import { HistorialArreglo } from './Componentes/Usuario/Arreglos/HistorialArregl
 import { EstadoVehiculo } from './Componentes/Usuario/Vehiculo/EstadoVehiculo'
 import { AgregarVehiculo } from './Componentes/Usuario/Vehiculo/AgregarVehiculo'
 import { AgendarArreglo } from './Componentes/Usuario/Arreglos/AgendarArreglo'
+import { MenuMecanico } from './Componentes/Mecanico/Menu/Menu_Mecanico'
+import { EditarPerfilMecanico } from './Componentes/Mecanico/EditarPerfil/EditarPerfilMecanico'
+import { Calendario } from './Componentes/Mecanico/Calendario/Calendario'
+import { FinalizarReparacion } from './Componentes/Mecanico/Reparacion/FinalizarReparacion'
+import { EntregaVehiculo } from './Componentes/Usuario/Vehiculo/EntregaVehiculo'
+
 
 function App() {
+
+
   return (
     <Router>
       <div className="container_general">
@@ -39,14 +47,29 @@ function App() {
           <Route path="/inicio_usuario">
             <MenuUsuario/>
           </Route>
+          <Route path="/inicio_mecanico">
+            <MenuMecanico/>
+          </Route>
           <Route path="/editar_perfil">
             <EditarPerfil/>
+          </Route>
+          <Route path="/editar_perfil_mecanico">
+            <EditarPerfilMecanico/>
+          </Route>
+          <Route path="/calendario">
+            <Calendario/>
           </Route>
           <Route path="/agregar_vehiculo">
             <AgregarVehiculo/>
           </Route>
           <Route path="/consultar_arreglos">
             <AgendarArreglo/>
+          </Route>
+          <Route path="/entrega_vehiculo">
+            <EntregaVehiculo/>
+          </Route>
+          <Route path="/reparacion/:idarreglo/:idvehiculo">
+            <FinalizarReparacion/>
           </Route>
           <Route path="/historial_arreglos">
             <HistorialArreglo/>

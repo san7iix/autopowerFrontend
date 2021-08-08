@@ -3,24 +3,26 @@ import { Link, useHistory } from 'react-router-dom'
 
 import API_USUARIO from '../../../API_METHODS/Usuario/API_USUARIO'
 
-
 export function LoginUsuario() {
   const [usuario, setUsuario] = useState('')
   const [password, setPassword] = useState('')
   const [mensaje, setMensaje] = useState('')
 
-  let history = useHistory();
+  let history = useHistory()
 
   function loguear() {
-    API_USUARIO.login(usuario,password).then((res)=>{
-        if(res.result){
-          localStorage.setItem('user_autoPower',usuario);
-          localStorage.setItem('user_autoPower_id',res.idusuario);
-            history.push("/inicio_usuario");
-        }else{
-            setMensaje('Compruebe las credenciales para loguear')
-        }
-    })
+    API_USUARIO.login(usuario, password).then((res) => {
+      return res;
+    }).then(res=>{
+      if (res.result) {
+        localStorage.setItem('user_autoPower', usuario)
+        localStorage.setItem('user_autoPower_id', res.idusuario)
+        history.push('/inicio_usuario')
+        window.location.reload();
+      } else {
+        setMensaje(res.message);
+      }
+    }).catch(err=>console.error(err));
   }
 
   function handleChange(e) {
@@ -57,7 +59,7 @@ export function LoginUsuario() {
         onChange={handleChange}
       ></input>
       <div>
-          <p className="msg_error">{mensaje}</p>
+        <p className="msg_error">{mensaje}</p>
       </div>
       <button id="login" className="button_primary" onClick={loguear}>
         Inciar Sesión

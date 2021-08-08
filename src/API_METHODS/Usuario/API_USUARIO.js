@@ -102,16 +102,18 @@ class API_USUARIO_SERVICE {
     }
 
 
-    async agregarVehiculo(usuario, nombre, marca, modelo, color) {
+    async agregarVehiculo(nombrePropietario, cedulaPropietario, nombre, marca, modelo, color, placa) {
         try {
             const res = await fetch(`${config.API_URL}vehiculos/agregar`, {
                 method: 'POST',
                 body: JSON.stringify({
-                    "usuario": usuario,
+                    "nombre_propietario": nombrePropietario,
+                    "cedula_propietario": cedulaPropietario,
                     "nombre": nombre,
                     "marca": marca,
                     "modelo": modelo,
-                    "color": color
+                    "color": color,
+                    "placa": placa
                 }),
                 headers: {
                     'Accept': 'application/json',
@@ -130,9 +132,29 @@ class API_USUARIO_SERVICE {
         }
     }
 
-    async obtenerArreglos(usuario) {
+    async verificarPLaca(placa) {
         try {
-            const res = await fetch(`${config.API_URL}vehiculos/arreglos/${usuario}`, {
+            const res = await fetch(`${config.API_URL}vehiculos/verificarPlaca/${placa}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
+                }
+            })
+
+            const data = res.json()
+            return data;
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async obtenerArreglos() {
+        try {
+            const res = await fetch(`${config.API_URL}vehiculos/arreglos`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -152,7 +174,7 @@ class API_USUARIO_SERVICE {
     }
 
 
-    async agendarArreglo(vehiculo, fecha, tipo_arreglo, taller) {
+    async agendarArreglo(vehiculo, fecha, tipo_arreglo, taller, mecanico) {
         try {
             const res = await fetch(`${config.API_URL}arreglos/agregar`, {
                 method: 'POST',
@@ -160,7 +182,8 @@ class API_USUARIO_SERVICE {
                     "vehiculo": vehiculo,
                     "fecha": fecha,
                     "tipo_arreglo": tipo_arreglo,
-                    "taller": taller
+                    "taller": taller,
+                    "mecanico": mecanico
                 }),
                 headers: {
                     'Accept': 'application/json',
@@ -180,9 +203,49 @@ class API_USUARIO_SERVICE {
     }
 
 
-    async obtenerAutos(usuario) {
+    async obtenerAutos() {
         try {
-            const res = await fetch(`${config.API_URL}vehiculos/usuario/${usuario}`, {
+            const res = await fetch(`${config.API_URL}vehiculos/`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
+                }
+            })
+
+            const data = await res.json();
+            return data;
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async obtenerAutosEntregar() {
+        try {
+            const res = await fetch(`${config.API_URL}vehiculos/entregar`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
+                }
+            })
+
+            const data = await res.json();
+            return data;
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async obtenerAutosArreglar() {
+        try {
+            const res = await fetch(`${config.API_URL}vehiculos/arreglar`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -233,6 +296,55 @@ class API_USUARIO_SERVICE {
             })
 
             const data = await res.json();
+            return data;
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async obtenerMecanicoLibre(fecha) {
+        try {
+            const res = await fetch(`${config.API_URL}mecanico/libres_fecha`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    "fecha": fecha
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
+                }
+            })
+
+            const data = await res.json();
+            return data;
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+    async entregarVehiculo(vehiculo) {
+        try {
+            const res = await fetch(`${config.API_URL}vehiculos/mecanico/cambiar_estado`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    "estado": 6,
+                    "vehiculo": vehiculo
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
+                }
+            })
+
+            const data = await res.json();
+
             return data;
 
         } catch (error) {

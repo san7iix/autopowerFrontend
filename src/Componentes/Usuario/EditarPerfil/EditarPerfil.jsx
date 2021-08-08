@@ -5,11 +5,10 @@ import API_USUARIO from '../../../API_METHODS/Usuario/API_USUARIO'
 
 
 export function EditarPerfil() {
-  const [usuario, setUsuario] = useState(localStorage.getItem('user_autoPower'))
+  const [usuario, ] = useState(localStorage.getItem('user_autoPower'))
   const [nombres, setNombres] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
-  const [state, setstate] = useState('')
   const [nuevoUsuario, setNuevoUsuario] = useState('')
 
 

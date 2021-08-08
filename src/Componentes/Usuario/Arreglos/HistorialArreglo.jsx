@@ -5,29 +5,27 @@ import API_USUARIO from '../../../API_METHODS/Usuario/API_USUARIO';
 export function HistorialArreglo() {
   const [data, setData] = useState([]);
 
-  const [idusuario, setidusuario] = useState(localStorage.getItem('user_autoPower_id'));
-
-
-
   useEffect(() => {
-    API_USUARIO.obtenerArreglos(idusuario).then((respuesta)=>{
+    API_USUARIO.obtenerArreglos().then((respuesta)=>{
       return respuesta;
     })
     .then(data=>{
       if(data.status){
+        console.log(data);
         setData(data.data);
       }else{
         alert(data.message)
       }
     })
     .catch(err=>console.error(err));
-  }, [idusuario])
+  }, [])
 
   return (
     <div className="container">
       <table>
         <thead>
           <th>Automovil</th>
+          <th>Cedula, Nombre del propietario</th>
           <th>Marca</th>
           <th>Modelo</th>
           <th>Taller</th>
@@ -40,6 +38,7 @@ export function HistorialArreglo() {
           {data.map((arreglo) => (
             <tr>
               <td>{arreglo.nombre}</td>
+              <td>{`${arreglo.cedula_propietario}, ${arreglo.nombre_propietario}`}</td>
               <td>{arreglo.marca}</td>
               <td>{arreglo.modelo}</td>
               <td>{arreglo.direccion}</td>
